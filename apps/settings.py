@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'leads',
     'theme',
     'books_cbv',
     'books_fbv',
