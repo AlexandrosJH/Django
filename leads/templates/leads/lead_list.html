@@ -5,14 +5,64 @@
 <h2><a href="{% url 'leads:lead_list' %}">Leads list</a></h2>
 
 <ul>
-    {% for lead in object_list %}
-    <li>{{ lead.name }}  {{ lead.email }} {{lead.job}}
-    <a href="{% url 'leads:lead_edit' lead.id %}">edit</a>
-    <a href="{% url 'leads:lead_delete' lead.id %}">delete</a>
-    </li>
-    {% endfor %}
+    
 </ul>
 
-<a href="{% url 'leads:lead_new' %}">New</a>
 
+<table class="table table-striped" style="margin-top:30px;">
+    <thead>
+      <tr>
+        <th style="text-align:center;">Name</th>
+        <th style="text-align:center;">Email</th>
+        <th style="text-align:center;">Job</th>
+        <th style="text-align:center;">Actions</th>
+      </tr>
+    </thead>
+    <tbody ng-controller="addcontrolle">
+      <tr>
+          <td>
+            <div class="form-group">
+              <input type="text" placeholder="Enter Name" class="form-control" ng-model="contact.name">
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <input type="text" placeholder="Enter Email" class="form-control" ng-model="contact.email">
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <input type="text" placeholder="Enter Job" class="form-control" ng-model="contact.job">
+            </div>
+          </td>
+          <td>
+            <center>
+                <a class="btn btn-warning" href="{% url 'leads:lead_new' %}">Add Contact</a>
+            </center>
+          </td>
+          <td>
+            <center>
+                <button class="btn btn-info" ng-click="edit()">Update Contact</button>
+            </center>
+          </td>
+      </tr>
+      {% for lead in object_list %}
+        <tr ng-repeat="contact in contactlist">
+            <td style="text-align:center;">{{ lead.name }}</td>
+            <td style="text-align:center;">{{ lead.email }}</td>
+            <td style="text-align:center;">{{ lead.job }}</td>
+            <td  style="text-align:center;">
+            <center>
+                <a class = "btn btn-danger" href="{% url 'leads:lead_edit' lead.id %}">edit</a>
+            </center>
+            </td>
+            <td  style="text-align:center;">
+            <center>
+                <a class="btn btn-success" href="{% url 'leads:lead_delete' lead.id %}">delete</a>
+            </center>
+            </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
