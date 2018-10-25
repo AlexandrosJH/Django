@@ -4,12 +4,7 @@
 
 <h2><a href="{% url 'leads:lead_list' %}">Leads list</a></h2>
 
-<ul>
-    
-</ul>
-
-
-<table class="table table-striped" style="margin-top:30px;">
+  <table class="table table-striped" style="margin-top:30px;">
     <thead>
       <tr>
         <th style="text-align:center;">Name</th>
@@ -20,31 +15,34 @@
     </thead>
     <tbody ng-controller="addcontrolle">
       <tr>
-          <td>
-            <div class="form-group">
-              <input type="text" placeholder="Enter Name" class="form-control" ng-model="contact.name">
-            </div>
-          </td>
-          <td>
-            <div class="form-group">
-              <input type="text" placeholder="Enter Email" class="form-control" ng-model="contact.email">
-            </div>
-          </td>
-          <td>
-            <div class="form-group">
-              <input type="text" placeholder="Enter Job" class="form-control" ng-model="contact.job">
-            </div>
-          </td>
-          <td>
-            <center>
-                <a class="btn btn-warning" href="{% url 'leads:lead_new' %}">Add Contact</a>
-            </center>
-          </td>
-          <td>
-            <center>
-                <button class="btn btn-info" ng-click="edit()">Update Contact</button>
-            </center>
-          </td>
+          <form id="data_form" action="" method ='post'> {% csrf_token %}
+            <td>
+              <div class="form-group">
+                <input type="text" placeholder="Enter Name" class="form-control" id = "name" name="name">
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <input type="text" placeholder="Enter Email" class="form-control" id = 'email' name="email">
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <input type="text" placeholder="Enter Job" class="form-control" id='job' name="job">
+              </div>
+            </td>
+            <td>
+              <center>
+                  <input class="btn btn-warning" type="submit" value="Add Contact" id="add" name = "add" >
+              </center>
+            </td>
+            <td>
+              <center>
+                  <input type="hidden" id="id">
+                  <input class="btn btn-info" type="submit" value="Update Contact" id="edit" name = "edit">
+              </center>
+            </td>
+          </form>
       </tr>
       {% for lead in object_list %}
         <tr ng-repeat="contact in contactlist">
@@ -53,16 +51,17 @@
             <td style="text-align:center;">{{ lead.job }}</td>
             <td  style="text-align:center;">
             <center>
-                <a class = "btn btn-danger" href="{% url 'leads:lead_edit' lead.id %}">edit</a>
+                <button class = "btn btn-danger" onclick="select_lead('{{ lead.name }}','{{ lead.email }}','{{ lead.job }}', '{{ lead.id }}')">Edit</button>
             </center>
             </td>
             <td  style="text-align:center;">
             <center>
-                <a class="btn btn-success" href="{% url 'leads:lead_delete' lead.id %}">delete</a>
+                <a class="btn btn-success" href="{% url 'leads:lead_delete' lead.id %}">Delete</a>
             </center>
             </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+
 {% endblock %}
